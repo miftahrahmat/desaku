@@ -1,10 +1,12 @@
+---
 stages:
-  - test
-
+- ".pre"
+- test
+- ".post"
 test:
   stage: test
   script:
-    - cp .env.example .env
-    - composer install
-    - php artisan key:generate
-    - vendor/bin/phpunit
+  - cp .env.example .env
+  - composer install
+  - php artisan key:generate
+  - vendor/bin/phpunit
