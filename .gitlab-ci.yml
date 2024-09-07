@@ -1,33 +1,21 @@
-image: node:18-buster
+# Menggunakan image Docker dengan PHP 8.2 dan Node.js
+image: edbizarro/laravel-ci:node-18
 
-# Cache untuk mempercepat instalasi dependencies
+# Cache untuk dependencies
 cache:
   paths:
-    - node_modules/
     - vendor/
+    - node_modules/
 
 stages:
   - install
   - build
   - deploy
 
-# Instalasi PHP 8.2 dan dependencies Laravel
+# Job untuk instalasi dependencies
 install_dependencies:
   stage: install
   script:
-    # Tambahkan repository PHP 8.2
-    - apt-get update && apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
-    - curl -sSL https://packages.sury.org/php/README.txt | bash
-    - apt-get update
-    # Instal PHP 8.2 dan semua extension yang dibutuhkan
-    - apt-get install -y php8.2 php8.2-cli php8.2-mbstring php8.2-xml php8.2-zip php8.2-curl php8.2-gd
-
-    # Verifikasi instalasi PHP versi 8.2
-    - php -v
-
-    # Instal Composer
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
     # Instal dependencies Laravel menggunakan Composer
     - composer install --prefer-dist --no-dev --no-ansi --no-interaction --no-progress --optimize-autoloader
 
@@ -38,7 +26,7 @@ install_dependencies:
       - vendor/
       - node_modules/
 
-# Build frontend menggunakan Vite
+# Job untuk membangun frontend menggunakan Vite
 build:
   stage: build
   script:
@@ -48,7 +36,7 @@ build:
     paths:
       - public/
 
-# Deploy ke GitLab Pages (Opsional)
+# Job untuk deploy ke GitLab Pages (opsional)
 pages:
   stage: deploy
   script:
