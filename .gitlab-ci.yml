@@ -1,40 +1,16 @@
+# The Docker image that will be used to build your app
 image: node:18-buster
-
-cache:
-  paths:
-    - node_modules/
-
-stages:
-  - install
-  - build
-
-install:
-  stage: install
+# Functions that should be executed before the build script is run
+before_script:
+  - npm install
+pages:
   script:
-    # Install npm dependencies
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
-
-build:
-  stage: build
-  script:
-    # Run the Vite build
     - npm run build
   artifacts:
     paths:
-      - public/
-
-# Deploy to GitLab Pages
-pages:
-  stage: deploy
-  script:
-    # Create the .public directory and move the build output there
-    - mkdir .public
-    - cp -r public/* .public
-  artifacts:
-    paths:
-      - .public
-  only:
-    - dev
+      # The folder that contains the files to be exposed at the Page URL
+      - public
+  rules:
+    # This ensures that only pushes to the default branch will trigger
+    # a pages deploy
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
