@@ -1,7 +1,6 @@
-# Menggunakan image Docker dengan PHP 8.2 dan Node.js
-image: edbizarro/laravel-ci:node-18
+image: jakzal/php:8.2-cli-alpine
 
-# Cache untuk dependencies
+# Cache untuk mempercepat pipeline
 cache:
   paths:
     - vendor/
@@ -12,10 +11,13 @@ stages:
   - build
   - deploy
 
-# Job untuk instalasi dependencies
+# Instalasi dependencies PHP dan Node.js
 install_dependencies:
   stage: install
   script:
+    # Install Node.js (karena image ini hanya memiliki PHP 8.2)
+    - apk add --no-cache nodejs npm
+
     # Instal dependencies Laravel menggunakan Composer
     - composer install --prefer-dist --no-dev --no-ansi --no-interaction --no-progress --optimize-autoloader
 
@@ -26,7 +28,7 @@ install_dependencies:
       - vendor/
       - node_modules/
 
-# Job untuk membangun frontend menggunakan Vite
+# Build frontend menggunakan Vite
 build:
   stage: build
   script:
@@ -36,7 +38,7 @@ build:
     paths:
       - public/
 
-# Job untuk deploy ke GitLab Pages (opsional)
+# Deploy ke GitLab Pages (opsional)
 pages:
   stage: deploy
   script:
