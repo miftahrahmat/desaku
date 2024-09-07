@@ -7,7 +7,6 @@ cache:
 
 stages:
   - install
-  - build
   - deploy
 
 install_dependencies:
@@ -30,17 +29,13 @@ install_dependencies:
 
     # Instal dependencies frontend menggunakan npm
     - npm install
+
+    # Build frontend assets using npm
+    - npm run build
   artifacts:
     paths:
       - vendor/
       - node_modules/
-
-build:
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    paths:
       - public/
 
 pages:
