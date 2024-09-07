@@ -9,7 +9,7 @@
 
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/php
-image: php:^8.2
+image: php:latest
 
 # Pick zero or more services to be used on all builds.
 # Only needed when using a docker container to run your tests in.
