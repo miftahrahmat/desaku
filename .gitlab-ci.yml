@@ -4,17 +4,12 @@ cache:
   paths:
     - node_modules/
 
-variables:
-  NODE_ENV: production
-
 stages:
-  - install_dependencies
+  - install
   - build
-  - deploy
 
-# Install dependencies for Node.js
-install_dependencies:
-  stage: install_dependencies
+install:
+  stage: install
   script:
     # Install npm dependencies
     - npm install
@@ -22,10 +17,10 @@ install_dependencies:
     paths:
       - node_modules/
 
-# Build using Vite and Tailwind CSS
 build:
   stage: build
   script:
+    # Run the Vite build
     - npm run build
   artifacts:
     paths:
