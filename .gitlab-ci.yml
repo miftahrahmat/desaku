@@ -17,7 +17,7 @@ install_dependencies:
     - apk add --no-cache nodejs npm
 
     # Install PHP extension exif
-    - apk add --no-cache php8-exif
+    - docker-php-ext-install exif
 
     # Verifikasi versi PHP dan Node.js
     - php -v
