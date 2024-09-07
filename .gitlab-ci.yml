@@ -1,6 +1,6 @@
 image: node:18-buster
 
-# Cache node_modules untuk mempercepat proses build berikutnya
+# Cache untuk mempercepat pipeline
 cache:
   paths:
     - node_modules/
@@ -11,43 +11,43 @@ stages:
   - build
   - deploy
 
-# Job untuk menginstal dependencies (Composer dan NPM)
+# Instalasi dependencies (PHP dan Node.js)
 install_dependencies:
   stage: install
   script:
-    # Install PHP dependencies (composer)
-    - apt-get update && apt-get install -y curl git unzip libpng-dev libonig-dev libxml2-dev zip libzip-dev
+    # Instal PHP dan extensions yang dibutuhkan oleh Laravel
+    - apt-get update && apt-get install -y php php-cli php-xml php-mbstring php-zip php-curl
+
+    # Instal Composer
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+    # Instal dependencies Laravel menggunakan Composer
     - composer install --prefer-dist --no-dev --no-ansi --no-interaction --no-progress --optimize-autoloader
 
-    # Install Node.js dependencies (npm)
+    # Instal dependencies Node.js menggunakan npm
     - npm install
   artifacts:
     paths:
-      - node_modules/
       - vendor/
+      - node_modules/
 
-# Job untuk menjalankan build menggunakan Vite
+# Build frontend menggunakan Vite
 build:
   stage: build
   script:
-    # Build frontend menggunakan Vite
     - npm run build
   artifacts:
     paths:
       - public/
-    # Menyimpan file build di folder public sebagai hasil artifact build
 
-# Job untuk deploy ke GitLab Pages (jika menggunakan Pages untuk hosting situs statis)
+# Deploy ke GitLab Pages (Opsional)
 pages:
   stage: deploy
   script:
-    # Buat direktori untuk GitLab Pages
     - mkdir .public
-    # Copy hasil build dari folder public ke direktori .public
     - cp -r public/* .public
   artifacts:
     paths:
       - .public
   only:
-    - dev  # Jalankan deploy hanya di branch main
+    - dev
