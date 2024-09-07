@@ -1,56 +1,33 @@
 # The Docker image that will be used to build your app
 image: node:18-buster
-# Cache Composer dan npm dependencies untuk mempercepat pipeline
+
 cache:
   paths:
-    - vendor/
     - node_modules/
 
-# Variabel environment
 variables:
   NODE_ENV: production
-  APP_ENV: production
-  DEPLOY_ENV: production
-  DB_CONNECTION: sqlite
-  CI_DEBUG_TRACE: "true"  # Ini opsional, untuk debugging lebih detail jika ada masalah
 
-# Tahapan pipeline
 stages:
-  - install_dependencies
   - build
   - deploy
 
-# Instalasi dependencies PHP dan Node.js
-install_dependencies:
-  stage: install_dependencies
-  script:
-    - apt-get update && apt-get install -y libpng-dev libonig-dev libzip-dev zip unzip
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-    - composer install --prefer-dist --no-dev --no-ansi --no-interaction --no-progress --optimize-autoloader
-    - npm install
-  artifacts:
-    paths:
-      - vendor/
-      - node_modules/
-
-# Proses build menggunakan Vite
 build:
   stage: build
   script:
+    - npm install
     - npm run build
   artifacts:
     paths:
       - public/
 
-# Deployment ke GitLab Pages
 pages:
   stage: deploy
   script:
     - mkdir .public
-    - cp -r public/* .public  # Salin file build dari public untuk GitLab Pages
-    
+    - cp -r public/* .public
   artifacts:
     paths:
-      - .public  # Folder yang akan di-deploy oleh GitLab Pages
+      - .public
   only:
-    - dev  # Jalankan hanya di branch main (ubah jika Anda menggunakan branch lain)
+    - dev  # Jalankan hanya pada branch main (ubah sesuai kebutuhan)
