@@ -1,6 +1,6 @@
-image: jakzal/php:8.2-cli-alpine
+image: php:8.2-fpm-alpine
 
-# Cache untuk mempercepat pipeline
+# Cache dependencies
 cache:
   paths:
     - vendor/
@@ -11,28 +11,33 @@ stages:
   - build
   - deploy
 
-# Instalasi dependencies PHP dan Node.js
+# Job untuk menginstal dependencies
 install_dependencies:
   stage: install
   script:
-    # Install Node.js (karena image ini hanya memiliki PHP 8.2)
+    # Install Node.js (karena image ini hanya memiliki PHP)
     - apk add --no-cache nodejs npm
 
+    # Verifikasi versi PHP dan Node.js
+    - php -v
+    - node -v
+    - npm -v
+
     # Instal dependencies Laravel menggunakan Composer
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --prefer-dist --no-dev --no-ansi --no-interaction --no-progress --optimize-autoloader
 
-    # Instal dependencies Node.js menggunakan npm
+    # Instal dependencies frontend menggunakan npm
     - npm install
   artifacts:
     paths:
       - vendor/
       - node_modules/
 
-# Build frontend menggunakan Vite
+# Job untuk membangun frontend menggunakan Vite
 build:
   stage: build
   script:
-    # Build Vite
     - npm run build
   artifacts:
     paths:
@@ -48,4 +53,4 @@ pages:
     paths:
       - .public
   only:
-    - dev
+    - main
