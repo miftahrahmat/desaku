@@ -1,6 +1,6 @@
 image: node:18-buster
 
-# Cache untuk mempercepat pipeline
+# Cache untuk mempercepat instalasi dependencies
 cache:
   paths:
     - node_modules/
@@ -11,12 +11,19 @@ stages:
   - build
   - deploy
 
-# Instalasi dependencies (PHP dan Node.js)
+# Instalasi PHP 8.2 dan dependencies Laravel
 install_dependencies:
   stage: install
   script:
-    # Instal PHP dan extensions yang dibutuhkan oleh Laravel
-    - apt-get update && apt-get install -y php php-cli php-xml php-mbstring php-zip php-curl
+    # Tambahkan repository PHP 8.2
+    - apt-get update && apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common
+    - curl -sSL https://packages.sury.org/php/README.txt | bash
+    - apt-get update
+    # Instal PHP 8.2 dan semua extension yang dibutuhkan
+    - apt-get install -y php8.2 php8.2-cli php8.2-mbstring php8.2-xml php8.2-zip php8.2-curl php8.2-gd
+
+    # Verifikasi instalasi PHP versi 8.2
+    - php -v
 
     # Instal Composer
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -35,6 +42,7 @@ install_dependencies:
 build:
   stage: build
   script:
+    # Build Vite
     - npm run build
   artifacts:
     paths:
