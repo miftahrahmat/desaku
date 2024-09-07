@@ -1,6 +1,5 @@
 image: php:8.2-fpm-alpine
 
-# Cache dependencies
 cache:
   paths:
     - vendor/
@@ -11,12 +10,14 @@ stages:
   - build
   - deploy
 
-# Job untuk menginstal dependencies
 install_dependencies:
   stage: install
   script:
     # Install Node.js (karena image ini hanya memiliki PHP)
     - apk add --no-cache nodejs npm
+
+    # Install PHP extension exif
+    - apk add --no-cache php8-exif
 
     # Verifikasi versi PHP dan Node.js
     - php -v
@@ -34,7 +35,6 @@ install_dependencies:
       - vendor/
       - node_modules/
 
-# Job untuk membangun frontend menggunakan Vite
 build:
   stage: build
   script:
@@ -43,7 +43,6 @@ build:
     paths:
       - public/
 
-# Deploy ke GitLab Pages (opsional)
 pages:
   stage: deploy
   script:
@@ -53,4 +52,4 @@ pages:
     paths:
       - .public
   only:
-    - main
+    - dev
