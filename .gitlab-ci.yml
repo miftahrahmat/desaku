@@ -1,4 +1,3 @@
-# The Docker image that will be used to build your app
 image: node:18-buster
 
 cache:
@@ -9,25 +8,38 @@ variables:
   NODE_ENV: production
 
 stages:
+  - install_dependencies
   - build
   - deploy
 
+# Install dependencies for Node.js
+install_dependencies:
+  stage: install_dependencies
+  script:
+    # Install npm dependencies
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+# Build using Vite and Tailwind CSS
 build:
   stage: build
   script:
-    - npm install
     - npm run build
   artifacts:
     paths:
       - public/
 
+# Deploy to GitLab Pages
 pages:
   stage: deploy
   script:
+    # Create the .public directory and move the build output there
     - mkdir .public
     - cp -r public/* .public
   artifacts:
     paths:
       - .public
   only:
-    - dev  # Jalankan hanya pada branch main (ubah sesuai kebutuhan)
+    - dev
