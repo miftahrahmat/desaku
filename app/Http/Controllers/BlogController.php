@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewCommentAdded;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 
 class BlogController extends Controller
 {
@@ -107,6 +110,8 @@ class BlogController extends Controller
         }
 
         $comment->save();
+        // Trigger event untuk notifikasi
+        event(new NewCommentAdded($comment));
 
         return redirect()->back()->with('success', 'Komentar berhasil ditambahkan!');
     }
