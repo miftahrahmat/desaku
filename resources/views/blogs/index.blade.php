@@ -6,8 +6,8 @@
         <section class="mb-8 text-justify">
             <div class="relative bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-800">
                 <img src="{{ $featuredPost->gambar }}" alt="{{ $featuredPost->title }}" class="w-full h-64 md:h-[20rem] object-cover" loading="lazy">
-                <div class="absolute top-2 right-2 bg-green-500 text-white rounded-md p-3 text-sm font-medium shadow-md">
-                    Populer
+                <div class="absolute top-2 right-2 bg-green-500 text-white rounded-md p-2 text-sm font-medium shadow-md">
+                    Terbaru
                 </div>
                 <div class="p-4">
                     <h3 class="text-xl font-semibold mb-3">
