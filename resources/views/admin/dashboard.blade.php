@@ -49,8 +49,8 @@
                 </div>
                 <div>
                     <h3 class="text-xl">Most Commented Article</h3>
-                    <p class="text-2xl font-semibold">{{ $mostCommentedArticle->title }}</p>
-                    <p>Comments: {{ $mostCommentedArticle->comments_count }}</p>
+                    <p class="text-2xl font-semibold">{{ $mostCommentedArticle->title ?? '' }}</p>
+                    <p>Comments: {{ $mostCommentedArticle->comments_count ?? '' }}</p>
                 </div>
             </div>
         </div>
@@ -66,8 +66,8 @@
                 </div>
                 <div>
                     <h3 class="text-xl">Most Viewed Article</h3>
-                    <p class="text-2xl font-semibold">{{ $mostViewedArticle->title }}</p>
-                    <p>Views: {{ $mostViewedArticle->views }}</p>
+                    <p class="text-2xl font-semibold">{{ $mostViewedArticle->title ?? '' }}</p>
+                    <p>Views: {{ $mostViewedArticle->views ?? '' }}</p>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -48,8 +49,9 @@ class AdminController extends Controller
     public function profile()
     {
         $user = Auth::user();
+        $code = Str::random(5);
 
-        return view('admin.profile', compact('user'));
+        return view('admin.profile', compact('user', 'code'));
     }
 
     /**
@@ -64,22 +66,11 @@ class AdminController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-                'avatar' => 'nullable|image|max:2048',
+                'avatar' => 'nullable|string',
             ]);
 
-            // Update avatar jika ada file yang di-upload
-            if ($request->hasFile('avatar')) {
-                // Hapus avatar lama jika ada
-                if ($user->avatar) {
-                    Storage::delete($user->avatar);
-                }
-
-                // Simpan avatar baru
-                $path = $request->file('avatar')->store('avatars');
-                $user->avatar = $path;
-            }
-
             // Update data user
+            $user->avatar = $request->avatar;
             $user->name = $request->name;
             $user->email = $request->email;
             $user->save();
@@ -90,17 +81,13 @@ class AdminController extends Controller
         if ($request->has('settings_tab')) {
             $request->validate([
                 'website_name' => 'required|string|max:255',
-                'website_icon' => 'nullable|image|max:2048',
+                'website_icon' => 'nullable|string',
                 'footer_text' => 'nullable|string|max:1000',
             ]);
 
             set_setting('website_name', $request->website_name);
             set_setting('footer_text', $request->footer_text);
-
-            if ($request->hasFile('website_icon')) {
-                $path = $request->file('website_icon')->store('icons');
-                set_setting('website_icon', $path);
-            }
+            set_setting('website_icon', $request->website_icon);
 
             return redirect()->back()->with('success', 'Settings updated successfully.');
         }

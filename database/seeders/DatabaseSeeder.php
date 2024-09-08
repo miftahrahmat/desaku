@@ -10,9 +10,10 @@ class DatabaseSeeder extends Seeder
     {
         // Memanggil seeder yang telah dibuat
         $this->call([
-            CategorySeeder::class,
-            TagSeeder::class,
-            PostSeeder::class,
+            //CategorySeeder::class,
+            //TagSeeder::class,
+            //PostSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

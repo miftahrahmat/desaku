@@ -57,20 +57,22 @@
                         @csrf
                         @method('PUT')
                     <input type="hidden" name="profile_tab" value="1">
-                    <!-- Avatar -->
-                    <div class="mb-4">
-                        <label for="avatar" class="block text-sm font-medium text-gray-700">Avatar</label>
-                        <input type="file" name="avatar" id="avatar" class="mt-1 block w-1/3 p-1 text-sm text-gray-500 border bg-slate-300 border-gray-300 rounded-lg cursor-pointer focus:outline-none">
+                    <div class="md:col-span-2 mb-4 relative">
+                        <label for="avatar" class="relative text-sm font-medium text-gray-700">Avatar</label>
+                        <input id="avatar" class="mt-1 block w-full px-4 py-2 rounded-md border-gray-300 text-gray-700 border bg-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
+                            type="text" name="avatar" placeholder="Choose avatar..." value="{{ old('avatar', $user->avatar) }}">
+                        <button id="lfm-avatar" type="button" class="absolute top-[34px] right-1 text-white text-xs bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md focus:outline-none">Pilih</button>
                     </div>
+
                     <!-- Nama -->
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" name="name" id="name" class="mt-1 block w-full px-4 py-2 bg-slate-300 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="{{ $user->name }}">
+                        <input type="text" name="name" id="name" class="mt-1 block w-full px-4 py-2 bg-slate-300 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="{{ old('name', $user->name) }}">
                     </div>
                     <!-- Email -->
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" id="email" value="{{ $user->email }}" class="mt-1 block w-full bg-slate-300 px-4 py-2 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="mt-1 block w-full bg-slate-300 px-4 py-2 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
                     <!-- Submit Button -->
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Save Changes</button>
@@ -87,11 +89,12 @@
                     <div class="mb-4">
                         <label for="website_name" class="block text-sm font-medium text-gray-700">Website Name</label>
                         <input type="text" name="website_name" id="website_name" value="{{ old('website_name', get_setting('website_name')) }}" class="mt-1 block w-full px-4 py-2 bg-slate-300 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    </div>
-                    <!-- Website Icon -->
-                    <div class="mb-4">
-                    <label for="website_icon" class="block text-sm font-medium text-gray-700">Avatar</label>
-                        <input type="file" name="website_icon" id="website_icon" class="mt-1 block w-1/3 p-1 text-sm text-gray-500 border bg-slate-300 border-gray-300 rounded-lg cursor-pointer focus:outline-none">
+                    </div>  
+                    <div class="md:col-span-2 mb-4 relative">
+                        <label for="website_icon" class="relative text-sm font-medium text-gray-700">Website Icon</label>
+                        <input id="website_icon" class="mt-1 block w-full px-4 py-2 rounded-md border-gray-300 text-gray-700 border bg-slate-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
+                            type="text" name="website_icon" placeholder="Choose icon..." value="{{ old('website_icon', get_setting('website_icon')) }}">
+                        <button id="lfm-icon" type="button" class="absolute top-[34px] right-1 text-white text-xs bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md focus:outline-none">Pilih</button>
                     </div>
                     <!-- Footer Text -->
                     <div class="mb-4">
@@ -130,6 +133,9 @@
 
 @push('scripts')
     <!-- JavaScript untuk Tab Interaktif -->
+    <!-- Laravel File Manager -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('[data-tab]');
@@ -155,6 +161,39 @@
 
             // Pilih tab pertama sebagai default
             tabs[0].click();
+        });
+
+        $(document).ready(function () {
+            var route_prefix = "/laravel-filemanager"; // Sesuaikan dengan route LFM
+
+            // Fungsi untuk membuka file manager
+            $('#lfm-avatar').filemanager('image', {prefix: route_prefix});
+            
+            // File manager untuk website icon
+            $('#lfm-icon').filemanager('image', {prefix: route_prefix});
+
+            // Menghubungkan file manager dengan input gambar
+            $('#lfm-avatar').on('click', function (event) {
+                event.preventDefault();
+
+                // Fungsi untuk membuka file manager dan mengambil URL
+                window.SetUrl = function (items) {
+                    // Mengambil URL gambar dari objek JSON dan mengisi input form
+                    var imageUrl = items[0].url; // URL gambar dari objek
+                    $('#avatar').val(imageUrl); // Mengisi input dengan URL gambar
+                };
+            });
+
+            $('#lfm-icon').on('click', function (event) {
+                event.preventDefault();
+
+                // Fungsi untuk membuka file manager dan mengambil URL
+                window.SetUrl = function (items) {
+                    // Mengambil URL gambar dari objek JSON dan mengisi input form
+                    var imageUrl = items[0].url; // URL gambar dari objek
+                    $('#website_icon').val(imageUrl); // Mengisi input dengan URL gambar
+                };
+            });
         });
     </script>
 @endpush
