@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('guest_email')->nullable(); // Guest user's email
             $table->text('body');
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->timestamps();
 
             // Foreign keys
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
