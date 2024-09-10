@@ -130,13 +130,16 @@
         </div>
 
         <div id="mobile-menu" class="hidden flex-col items-center md:hidden p-4">
+            @if(auth()->user()->role == 'admin')
+            <a href="/admin" class="block py-2">Admin</a>
+            @endif
             <a href="/" class="block py-2">About</a>
-            <a href="/portfolio" class="block py-2">Contact Me</a>
+            <a href="/" class="block py-2">Contact Me</a>
             
         </div>
     </header>
 
-    <main class="mt-24 px-2 flex-grow">
+    <main class="mt-24 px-3 flex-grow">
         @yield('content')
     </main>
 
