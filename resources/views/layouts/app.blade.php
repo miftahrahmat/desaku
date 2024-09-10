@@ -118,7 +118,7 @@
 
             <div class="flex items-center md:hidden space-x-2">
                 <form action="{{ route('posts.search') }}" method="GET">
-                    <input type="text" name="query" placeholder="Search..." class="p-2 w-[12rem] rounded-md" value="{{ request('query') }}">
+                    <input type="text" name="query" placeholder="Search..." class="p-2 w-[14rem] rounded-md" value="{{ request('query') }}">
                 </form>
                 <button id="menu-toggle" class="p-2 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
