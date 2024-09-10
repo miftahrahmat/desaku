@@ -38,12 +38,13 @@
             </button>
         </div>
         <nav class="mt-8 space-y-4">
-            <a href="#" class="block px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-600">Home</a>
-            <a href="#" class="block px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-600">Informasi Akun</a>
-            <a href="#" class="block px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-600">Buat Template</a>
-            <a href="#" class="block px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-600">Percakapan</a>
-            <a href="#" class="block px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-600">Kelola BOT</a>
-            <a href="#" class="block px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-600">Logout</a>
+            <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Home</a>
+            <a href="{{ route('admin.posts.index') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.posts.index', 'admin.posts.create', 'admin.posts.edit') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Artikel</a>
+            <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.profile') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Pengaturan</a>
+            <form action="{{ route('logout') }}" method="POST">
+            @csrf
+                <button class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('logout') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Logout</button>
+            </form>
         </nav>
     </div>
 </div>
