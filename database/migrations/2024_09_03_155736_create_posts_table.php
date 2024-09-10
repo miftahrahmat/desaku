@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('body');
-            $table->text('excerpt')->nullable();
+            $table->longText('body');
+            $table->mediumText('excerpt')->nullable();
+            $table->string('gambar');
             $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

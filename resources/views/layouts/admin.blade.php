@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', get_setting('website_name'))</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ get_setting('website_icon') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_setting('website_icon') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ get_setting('website_icon') }}">
     @vite('resources/css/app.css')
     @yield('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

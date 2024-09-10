@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', get_setting('website_name'))</title>
-
+    <meta name="application-name" content="{{ get_setting('website_name') }}">
     <meta name="description" content="@yield('meta_description', 'Default meta description')">
 
     <meta name="keywords" content="@yield('meta_keywords', 'default, keywords')">
 
     <meta property="og:title" content="@yield('title', get_setting('website_name'))">
     <meta property="og:description" content="@yield('meta_description', 'Default meta description')">
-    <meta property="og:image" content="@yield('og_image', asset('default-image.jpg'))">
+    <meta property="og:image" content="@yield('og_image', get_setting('website_icon'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="article">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', get_setting('website_name'))">
     <meta name="twitter:description" content="@yield('meta_description', 'Default meta description')">
-    <meta name="twitter:image" content="@yield('og_image', asset('default-image.jpg'))">
+    <meta name="twitter:image" content="@yield('og_image', get_setting('website_icon'))">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ get_setting('website_icon') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_setting('website_icon') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ get_setting('website_icon') }}">
 
     <link rel="canonical" href="{{ url()->current() }}">
     
@@ -103,7 +107,7 @@
         <div class="flex items-center justify-between">
            
             <h1 class="text-xl font-bold md:text-2xl">
-                <a href="/">{{ get_setting('website_name') }}</a>
+                <a href="/">{{ get_setting('website_name') ?? 'Your Name' }}</a>
             </h1>
 
             <div class="hidden md:flex flex-grow justify-center md:ml-8">
@@ -137,7 +141,7 @@
     </main>
 
     <footer class="p-4 text-center rounded-t-sm">
-        <p>{{ get_setting('footer_text') }} <span class="text-gray-700 font-bold tracking-wider">Cianjur</span></p>
+        <p>{{ get_setting('footer_text') ?? 'Copyright © 2024 Miftah. Made with love in' }} <span class="text-gray-700 font-bold tracking-wider">Cianjur</span></p>
     </footer>
 
     @vite('resources/js/app.js')

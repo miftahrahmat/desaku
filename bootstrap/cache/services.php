@@ -32,7 +32,9 @@
     28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     29 => 'Termwind\\Laravel\\TermwindServiceProvider',
     30 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
+    31 => 'App\\Providers\\EventServiceProvider',
+    32 => 'App\\Providers\\AppServiceProvider',
+    33 => 'App\\Providers\\EventServiceProvider',
   ),
   'eager' => 
   array (
@@ -53,7 +55,9 @@
     14 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     15 => 'Termwind\\Laravel\\TermwindServiceProvider',
     16 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
-    17 => 'App\\Providers\\AppServiceProvider',
+    17 => 'App\\Providers\\EventServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
+    19 => 'App\\Providers\\EventServiceProvider',
   ),
   'deferred' => 
   array (
