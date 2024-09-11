@@ -4,9 +4,11 @@
         <a href="#" class="text-xl font-bold">{{ get_setting('website_name') }}</a>
     </div>
     <nav class="flex-grow px-4 py-6">
+    <a href="{{ route('blogs.index') }}" class="{{ request()->routeIs('blogs.index') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Home</a>
         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Dashboard</a>
-        <a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts.index', 'admin.posts.create', 'admin.posts.edit') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Posts</a>
-        <a href="{{ route('admin.profile') }}" class="{{ request()->routeIs('admin.profile') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Profile</a>
+        <a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts.index', 'admin.posts.create', 'admin.posts.edit') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Manage Artikel</a>
+        <a href="{{ route('admin.comments.index') }}" class="{{ request()->routeIs('admin.comments.index') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Manage Komentar</a>
+        <a href="{{ route('admin.profile') }}" class="{{ request()->routeIs('admin.profile') ? 'bg-gray-700' : '' }} block px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Pengaturan Web</a>
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button class="{{ request()->routeIs('logout') ? 'bg-gray-700' : '' }} px-4 py-2 mt-2 text-sm font-semibold text-white rounded-lg hover:bg-gray-600">Logout</button>
@@ -38,9 +40,11 @@
             </button>
         </div>
         <nav class="mt-8 space-y-4">
-            <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Home</a>
-            <a href="{{ route('admin.posts.index') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.posts.index', 'admin.posts.create', 'admin.posts.edit') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Artikel</a>
-            <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.profile') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Pengaturan</a>
+            <a href="{{ route('blogs.index') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('blogs.index') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Home</a>
+            <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Dashboard</a>
+            <a href="{{ route('admin.posts.index') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.posts.index', 'admin.posts.create', 'admin.posts.edit') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Manage Artikel</a>
+            <a href="{{ route('admin.comments.index') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.comments.index') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Manage Komentar</a>
+            <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('admin.profile') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Pengaturan Web</a>
             <form action="{{ route('logout') }}" method="POST">
             @csrf
                 <button class="block px-4 py-2 text-sm font-semibold text-white {{ request()->routeIs('logout') ? 'bg-gray-700' : '' }} rounded-lg hover:bg-gray-600">Logout</button>

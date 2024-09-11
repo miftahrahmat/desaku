@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Setting;
@@ -107,4 +108,21 @@ class AdminController extends Controller
 
         return redirect()->back()->with('error', 'Nothing to update.');
     }
+
+    // Menampilkan halaman manage komentar
+    public function comments()
+    {
+        $comments = Comment::latest()->paginate(10); // Ambil data komentar dengan pagination
+        return view('admin.comments', compact('comments'));
+    }
+
+    // Menghapus komentar
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return redirect()->route('admin.comments.index')->with('success', 'Komentar berhasil dihapus.');
+    }
+
 }

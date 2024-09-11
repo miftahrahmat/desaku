@@ -234,12 +234,17 @@
                 </div>
             @endforeach
         </div>
+        @if($comments->count() > 0)
+        <!-- Pagination -->
+        <div class="mt-8">
+            {{ $comments->links('vendor.pagination.custom') }}
+        </div>
+        @endif
         <!-- Form Komentar Baru -->
         <div class="my-8">
             <h4 class="text-lg font-semibold mb-2">Tinggalkan Komentar</h4>
-            <form action="{{ route('comments.store', $post->id) }}" method="POST">
+            <form action="{{ route('comments.store', $post->id) }}" method="POST" class="flex flex-col">
                 @csrf
-                <!-- Input untuk nama dan email jika pengguna tidak terdaftar -->
                 @guest
                     <div class="mb-4">
                         <input type="text" name="guest_name" class="w-full p-2 border border-gray-300 rounded-md mb-2" placeholder="Nama" required>
@@ -249,8 +254,11 @@
                 <div class="mb-4">
                     <textarea name="body" rows="4" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Tulis komentar Anda di sini..."></textarea>
                 </div>
-                
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Kirim Komentar</button>
+
+                <!-- Tambahkan div pembungkus dengan justify-end untuk memindahkan tombol ke kanan -->
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Kirim Komentar</button>
+                </div>
             </form>
         </div>
 

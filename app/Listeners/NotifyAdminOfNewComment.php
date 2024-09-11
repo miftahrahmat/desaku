@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class NotifyAdminOfNewComment implements ShouldQueue
+class NotifyAdminOfNewComment
 {
     use InteractsWithQueue;
 

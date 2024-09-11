@@ -23,6 +23,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::put('/admin/profile/update', [AdminController::class, 'update'])->name('admin.profile.update');
 
+    Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments.index');
+    Route::delete('/admin/comments/{id}/delete', [AdminController::class, 'destroy'])->name('admin.comments.destroy');
+
     // Manajemen artikel
     Route::get('/admin/posts', [PostController::class, 'adminIndex'])->name('admin.posts.index');
     Route::get('/admin/posts/create', [PostController::class, 'create'])->name('admin.posts.create');

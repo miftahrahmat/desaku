@@ -77,7 +77,7 @@ class BlogController extends Controller
         $comments = Comment::where('post_id', $post->id)
         ->whereNull('parent_id') // Hanya ambil komentar induk
         ->with(['replies', 'user']) // Ambil balasan dan pengguna terdaftar (jika ada)
-        ->get();
+        ->paginate(6);
 
         // Ambil artikel terkait berdasarkan kategori atau tags yang sama
         $relatedPosts = Post::whereHas('categories', function ($query) use ($post) {
