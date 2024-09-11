@@ -209,7 +209,7 @@
                             @foreach($comment->replies as $reply)
                                 <div class="bg-white p-4 rounded-lg shadow-md border mb-4">
                                     <div class="flex items-center mb-2">
-                                        @if($reply->user->id === 1 && $reply->user->name === 'Miftah')
+                                        @if(optional($reply->user)->role === 'admin')
                                             <img src="{{ $reply->user->avatar }}" alt="User Avatar" class="w-10 h-10 rounded-full mr-3">
                                         @else
                                             <img src="https://secure.gravatar.com/avatar/0eac92b304e168a1119a37a3908f6442?s=50&d=mm&r=g" alt="User Avatar" class="w-10 h-10 rounded-full mr-3">

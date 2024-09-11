@@ -5,17 +5,18 @@
 @section('content')
 <div class="flex items-center justify-center bg-gray-50 dark:bg-gray-900">
     <div class="max-w-md w-full space-y-4 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-        @if(session('error'))
-        <div class="w-full p-4 mb-4 text-red-700 bg-red-100 border border-red-200 rounded-lg">
-            {{ session('error') }}
-        </div>
-        @endif
+        
         <div class="text-center">
             <h2 class="text-2xl font-bold">Login to Your Account</h2>
             <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 Please login using your credentials.
             </p>
         </div>
+        @if(session('error'))
+        <div class="w-full p-4 mb-4 text-red-700 bg-red-100 border border-red-200 rounded-lg">
+            {{ session('error') }}
+        </div>
+        @endif
         <form method="POST" action="{{ route('login') }}" class="space-y-6">
             @csrf
 
