@@ -74,7 +74,7 @@
     .ql-syntax {
         background-color: #2e2e2e;  /* darker background for syntax */
         color: #f8f8f2;             /* light text color */
-        padding: 10px;
+        padding: 10px !important;
         border-radius: 5px;
         overflow-x: auto;            /* handle long lines with horizontal scroll */
         font-family: 'Fira Code', 'Courier New', monospace; /* developer-friendly font */
